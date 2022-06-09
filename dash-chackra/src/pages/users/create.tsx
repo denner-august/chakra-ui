@@ -8,7 +8,7 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
-import { Header } from "../../components/header";
+import { Header } from "../../components/Header";
 import { SideBar } from "../../components/SideBar";
 import { Input } from "../../components/form/input";
 
