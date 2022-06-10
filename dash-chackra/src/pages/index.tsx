@@ -3,9 +3,9 @@ import { Flex, Button, Stack } from "@chakra-ui/react";
 import { Input } from "../components/form/input";
 
 export default function Home() {
-  function temporaria(e) {
-    e.preventDefault();
-  }
+  // function temporaria(e) {
+  //   e.preventDefault();
+  // }
   return (
     <div>
       <Flex
@@ -24,20 +24,29 @@ export default function Home() {
           flexDir={"column"}
         >
           <Stack spacing={5}>
-            <Input name="Email" label="Email" type="Email" />
+            <Input
+              role="email"
+              name="Email"
+              label="Email"
+              type="Email"
+              placeholder="Digite seu Email"
+            />
             <Input
               name="Password"
               label="Password"
               type="Password"
               maxLength={15}
+              placeholder="Digite sua senha"
             />
           </Stack>
 
           <Button
+            role="submit"
+            name="button"
             type="submit"
             mt="6"
             colorScheme={"pink"}
-            onClick={(value) => temporaria(value)}
+            // onClick={(value) => temporaria(value)}
           >
             Login
           </Button>
