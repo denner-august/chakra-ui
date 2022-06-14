@@ -1,20 +1,26 @@
 import { Flex, Box, Avatar, Text } from "@chakra-ui/react";
 import Link from "next/link";
 
-export function Profile() {
+interface ProfileProps {
+  showProfileData: boolean;
+}
+
+export function Profile({ showProfileData = true }: ProfileProps) {
   return (
     <Flex align={"center"}>
-      <Box mr="4" textAlign={"center"}>
-        <Text>Denner Augusto</Text>
-        <Link
-          onClick={() => alert("you found my linkedin")}
-          color="#F6AD55"
-          href="https://www.linkedin.com/in/denner-bernardes/"
-          target={"_blank"}
-        >
-          denner.augusto90@gmail.com
-        </Link>
-      </Box>
+      {showProfileData && (
+        <Box mr="4" textAlign={"center"}>
+          <Text>Denner Augusto</Text>
+          <Link
+            onClick={() => alert("you found my linkedin")}
+            color="#F6AD55"
+            href="https://www.linkedin.com/in/denner-bernardes/"
+            target={"_blank"}
+          >
+            denner.augusto90@gmail.com
+          </Link>
+        </Box>
+      )}
 
       <Link
         href="https://github.com/denner-august"
