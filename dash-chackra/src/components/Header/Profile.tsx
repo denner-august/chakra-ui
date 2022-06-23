@@ -22,11 +22,7 @@ export function Profile({ showProfileData = true }: ProfileProps) {
         </Box>
       )}
 
-      <Link
-        href="https://github.com/denner-august"
-        target={"_blank"}
-        onClick={() => alert("you found my github")}
-      >
+      <Link href="https://github.com/denner-august" target={"_blank"}>
         <Avatar
           color="black"
           backgroundColor={"#F6AD55"}
