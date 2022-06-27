@@ -12,7 +12,6 @@ export function Profile({ showProfileData = true }: ProfileProps) {
         <Box mr="4" textAlign={"center"}>
           <Text>Denner Augusto</Text>
           <Link
-            onClick={() => alert("you found my linkedin")}
             color="#F6AD55"
             href="https://www.linkedin.com/in/denner-bernardes/"
             target={"_blank"}

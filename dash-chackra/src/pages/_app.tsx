@@ -5,15 +5,26 @@ import { theme } from "../styles/theme";
 import { SidebarDrawerProvider } from "../context/sideBarDraweContext";
 import { makeServer } from "../../services/mirage/index";
 
-process.env.NODE_ENV === "development" ?? makeServer();
+import { QueryClientProvider, QueryClient } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+if (process.env.NODE_ENV === "development") {
+  makeServer();
+}
+
+const queryCliente = new QueryClient();
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider resetCSS={true} theme={theme}>
-      <SidebarDrawerProvider>
-        <Component {...pageProps} />
-      </SidebarDrawerProvider>
-    </ChakraProvider>
+    <QueryClientProvider client={queryCliente}>
+      <ChakraProvider resetCSS={true} theme={theme}>
+        <SidebarDrawerProvider>
+          <Component {...pageProps} />
+        </SidebarDrawerProvider>
+      </ChakraProvider>
+
+      <ReactQueryDevtools />
+    </QueryClientProvider>
   );
 }
 
