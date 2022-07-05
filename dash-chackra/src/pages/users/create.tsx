@@ -8,14 +8,20 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/react";
+
 import { Header } from "../../components/Header";
 import { SideBar } from "../../components/SideBar";
 import { Input } from "../../components/form/input";
-import Link from "next/link";
 
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutation } from "react-query";
+import { api } from "../../../services/api";
+import { queryCliente } from "../../../services/queryClient";
+import { useRouter } from "next/router";
+
+import Link from "next/link";
+import * as yup from "yup";
 
 type CreateUserFormDataProps = {
   name: string;
@@ -25,6 +31,26 @@ type CreateUserFormDataProps = {
 };
 
 export default function CreateUser() {
+  const router = useRouter();
+
+  const createUser = useMutation(
+    async (user: CreateUserFormDataProps) => {
+      const response = await api.post("users", {
+        user: {
+          ...user,
+          created_at: new Date(),
+        },
+      });
+
+      return response.data.user;
+    },
+    {
+      onSuccess: () => {
+        queryCliente.invalidateQueries("users");
+      },
+    }
+  );
+
   const CreateUserFormSchema = yup.object({
     name: yup.string().required("nome obrigatório"),
     email: yup.string().required("E-mail obrigatório").email("E-mail invalido"),
@@ -46,18 +72,14 @@ export default function CreateUser() {
   const handCreateUser: SubmitHandler<CreateUserFormDataProps> = async (
     values
   ) => {
-    new Promise((resolve) => setTimeout(resolve, 2000));
+    await createUser.mutateAsync(values);
 
-    console.log(values);
+    router.push("/users");
   };
 
   return (
     <Box>
       <Header />
-
-      {/* "onClick" foi passado para <Link> com `href` de `https://www.linkedin.com/in/denner-bernardes/` mas "legacyBehavior" foi definido. O comportamento legado requer que onClick seja definido no filho de next/link
-       */}
-
       <Flex width="100%" my={6} maxWidth={1480} mx="auto" px={6}>
         <SideBar />
 
@@ -96,14 +118,14 @@ export default function CreateUser() {
                 {...register("password")}
                 name="password"
                 label="Password"
-                type="text"
+                type="password"
                 error={errors.password}
               />
 
               <Input
                 {...register("Password_confirmation")}
                 name="Password_confirmation"
-                type="text"
+                type="password"
                 label="Confirmation Password"
                 error={errors.Password_confirmation}
               />
